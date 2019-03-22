@@ -5,9 +5,6 @@
 #pragma semicolon 1
 #pragma newdecls required
 
-#define PLUGIN_AUTHOR "B3none"
-#define PLUGIN_VERSION "2.0.0"
-
 Handle cvar_red = INVALID_HANDLE;
 Handle cvar_green = INVALID_HANDLE;
 Handle cvar_blue = INVALID_HANDLE;
@@ -41,9 +38,9 @@ int bombsite = BOMBSITE_INVALID;
 public Plugin myinfo =
 {
     name = "Retake hud",
-    author = PLUGIN_AUTHOR,
+    author = "B3none",
     description = "Bombsite Hud",
-    version = PLUGIN_VERSION,
+    version = "2.0.0",
     url = "https://github.com/Czar-VG/RetakeSiteHud"
 };
 
