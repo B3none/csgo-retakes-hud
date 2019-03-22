@@ -7,7 +7,7 @@
 #pragma newdecls required
 
 #define PLUGIN_AUTHOR "Czar, B3none"
-#define PLUGIN_VERSION "1.5.2"
+#define PLUGIN_VERSION "1.6.0"
 
 Handle cvar_red = INVALID_HANDLE;
 Handle cvar_green = INVALID_HANDLE;
@@ -95,11 +95,11 @@ public Action displayHud(Handle timer)
             if (HasBomb(i))
             {
                 // We always want to show this one regardless
-                ShowHudText(i, 5, "%t!", "Planter Message");
+                ShowHudText(i, 5, "Plant the bomb!");
             }
             else if (clientTeam == CS_TEAM_CT || (clientTeam == CS_TEAM_T && showTerrorists))
             {
-                ShowHudText(i, 5, "%t: %s", clientTeam == CS_TEAM_T ? "Terrorist Message" : "Counter Terrorist Message", bombsite);
+                ShowHudText(i, 5, "%s Bombsite: %s", clientTeam == CS_TEAM_T ? "Defend" : "Retake", bombsite);
             }
         }
     }
