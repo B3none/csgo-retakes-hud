@@ -1,13 +1,12 @@
 #include <sourcemod>
 #include <sdktools>
-#include <retakes>
 #include <cstrike>
 
 #pragma semicolon 1
 #pragma newdecls required
 
-#define PLUGIN_AUTHOR "Czar, B3none"
-#define PLUGIN_VERSION "1.6.0"
+#define PLUGIN_AUTHOR "B3none"
+#define PLUGIN_VERSION "2.0.0"
 
 Handle cvar_red = INVALID_HANDLE;
 Handle cvar_green = INVALID_HANDLE;
@@ -28,6 +27,16 @@ float fadeout;
 float holdtime;
 float xcord;
 float ycord;
+
+enum //Bombsites
+{
+    BOMBSITE_INVALID = -1,
+    BOMBSITE_A = 0,
+    BOMBSITE_B = 1
+}
+
+int bomber = -1;
+int bombsite = BOMBSITE_INVALID;
 
 public Plugin myinfo =
 {
@@ -71,7 +80,10 @@ public void OnConfigsExecuted()
 
 public void Event_OnRoundStart(Handle event, const char[] name, bool dontBroadcast)
 {
-    CreateTimer(1.0, displayHud);
+	bomber = GetClientWithBomb();
+	bombsite = GetNearestBombsite(bomber);
+	
+	CreateTimer(1.0, displayHud);
 }
 
 public Action displayHud(Handle timer)
@@ -80,18 +92,26 @@ public Action displayHud(Handle timer)
     {
         return;
     }
+    else if (bomber == -1)
+    {
+    	return;
+    }
+    else if (bombsite == BOMBSITE_INVALID)
+    {
+    	return;
+    }
 
-    char bombsite[8];
-    bombsite = (Retakes_GetCurrrentBombsite() == BombsiteA) ? "A" : "B";
+    char bombsiteStr[8];
+    bombsiteStr = (bombsite == BOMBSITE_A) ? "A" : "B";
 
     for (int i = 1; i <= MaxClients; i++)
     {
         if (IsValidClient(i))
         {
             int clientTeam = GetClientTeam(i);
-
+            
             SetHudTextParams(xcord, ycord, holdtime, red, green, blue, 255, 0, 0.25, fadein, fadeout);
-
+            
             if (HasBomb(i))
             {
                 // We always want to show this one regardless
@@ -110,12 +130,51 @@ stock bool IsValidClient(int client)
     return client > 0 && client <= MaxClients && IsClientConnected(client) && IsClientInGame(client) && !IsFakeClient(client);
 }
 
+stock int GetClientWithBomb()
+{
+	for (int i = 1; i <= MaxClients; i++)
+	{
+		if (IsValidClient(i) && HasBomb(i))
+		{
+			return i;
+		}
+	}
+	
+	return -1;
+}
+
 stock bool HasBomb(int client)
 {
-    return GetPlayerWeaponSlot(client, 4) != -1;
+    return GetClientTeam(client) == CS_TEAM_T && GetPlayerWeaponSlot(client, 4) != -1;
 }
 
 stock bool IsWarmup()
 {
     return GameRules_GetProp("m_bWarmupPeriod") == 1;
+}
+
+stock int GetNearestBombsite(int client)
+{
+	float pos[3];
+	GetClientAbsOrigin(client, pos);
+	
+	int playerManager = FindEntityByClassname(INVALID_ENT_REFERENCE, "cs_player_manager");
+	if (playerManager == INVALID_ENT_REFERENCE)
+	{
+		return INVALID_ENT_REFERENCE;
+	}
+	
+	float aCenter[3], bCenter[3];
+	GetEntPropVector(playerManager, Prop_Send, "m_bombsiteCenterA", aCenter);
+	GetEntPropVector(playerManager, Prop_Send, "m_bombsiteCenterB", bCenter);
+	
+	float aDist = GetVectorDistance(aCenter, pos, true);
+	float bDist = GetVectorDistance(bCenter, pos, true);
+	
+	if (aDist < bDist)
+	{
+		return BOMBSITE_A;
+	}
+	
+	return BOMBSITE_B;
 }
