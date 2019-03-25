@@ -83,17 +83,9 @@ public void Event_OnRoundStart(Handle event, const char[] name, bool dontBroadca
 
 public Action displayHud(Handle timer)
 {
-    if (IsWarmup())
+    if (IsWarmup() || bomber == -1 || bombsite == BOMBSITE_INVALID)
     {
         return;
-    }
-    else if (bomber == -1)
-    {
-    	return;
-    }
-    else if (bombsite == BOMBSITE_INVALID)
-    {
-    	return;
     }
 
     char bombsiteStr[8];
