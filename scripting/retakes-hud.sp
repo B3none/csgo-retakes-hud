@@ -5,16 +5,18 @@
 #pragma semicolon 1
 #pragma newdecls required
 
-Handle cvar_red = INVALID_HANDLE;
-Handle cvar_green = INVALID_HANDLE;
-Handle cvar_blue = INVALID_HANDLE;
-Handle cvar_fadein = INVALID_HANDLE;
-Handle cvar_fadeout = INVALID_HANDLE;
-Handle cvar_xcord = INVALID_HANDLE;
-Handle cvar_ycord = INVALID_HANDLE;
-Handle cvar_holdtime = INVALID_HANDLE;
-Handle cvar_showterrorists = INVALID_HANDLE;
+Handle cvar_autoplant_enabled = null;
+Handle cvar_red = null;
+Handle cvar_green = null;
+Handle cvar_blue = null;
+Handle cvar_fadein = null;
+Handle cvar_fadeout = null;
+Handle cvar_xcord = null;
+Handle cvar_ycord = null;
+Handle cvar_holdtime = null;
+Handle cvar_showterrorists = null;
 
+bool autoplantEnabled;
 bool showTerrorists;
 int red;
 int green;
@@ -37,15 +39,16 @@ int bombsite = BOMBSITE_INVALID;
 
 public Plugin myinfo =
 {
-    name = "Retake hud",
+    name = "[Retakes] Bombsite HUD",
     author = "B3none",
     description = "Bombsite Hud",
-    version = "2.0.1",
+    version = "2.1.0",
     url = "https://github.com/b3none/retakes-hud"
 };
 
 public void OnPluginStart()
 {
+    cvar_autoplant_enabled = FindConVar("sm_autoplant_enabled");
     cvar_red = CreateConVar("sm_redhud", "255");
     cvar_green = CreateConVar("sm_greenhud", "255");
     cvar_blue = CreateConVar("sm_bluehud", "255");
@@ -54,7 +57,7 @@ public void OnPluginStart()
     cvar_holdtime = CreateConVar("sm_holdtime", "5.0");
     cvar_xcord = CreateConVar("sm_xcord", "0.42");
     cvar_ycord = CreateConVar("sm_ycord", "0.3");
-    cvar_showterrorists = CreateConVar("sm_showterrorists", "1");
+    cvar_showterrorists = CreateConVar("sm_showterrorists", "1", "Should we display HUD to terrorists?");
 
     AutoExecConfig(true, "retakehud");
     HookEvent("round_start", Event_OnRoundStart);
@@ -62,6 +65,7 @@ public void OnPluginStart()
 
 public void OnConfigsExecuted()
 {
+    autoplantEnabled = GetConVarBool(cvar_autoplant_enabled);
     showTerrorists = GetConVarBool(cvar_showterrorists);
     red = GetConVarInt(cvar_red);
     green = GetConVarInt(cvar_green);
@@ -99,9 +103,8 @@ public Action displayHud(Handle timer)
             
             SetHudTextParams(xcord, ycord, holdtime, red, green, blue, 255, 0, 0.25, fadein, fadeout);
             
-            if (HasBomb(i))
+            if (!autoplantEnabled && HasBomb(i))
             {
-                // We always want to show this one regardless
                 ShowHudText(i, 5, "Plant the bomb!");
             }
             else if (clientTeam == CS_TEAM_CT || (clientTeam == CS_TEAM_T && showTerrorists))
