@@ -40,14 +40,12 @@ public Plugin myinfo =
     name = "Retake hud",
     author = "B3none",
     description = "Bombsite Hud",
-    version = "2.0.0",
-    url = "https://github.com/Czar-VG/RetakeSiteHud"
+    version = "2.0.1",
+    url = "https://github.com/b3none/retakes-hud"
 };
 
 public void OnPluginStart()
 {
-    LoadTranslations ("retakehud.phrases");
-
     cvar_red = CreateConVar("sm_redhud", "255");
     cvar_green = CreateConVar("sm_greenhud", "255");
     cvar_blue = CreateConVar("sm_bluehud", "255");
