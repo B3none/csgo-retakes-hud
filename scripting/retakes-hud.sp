@@ -116,7 +116,7 @@ public Action displayHud(Handle timer)
             }
             else if (clientTeam == CS_TEAM_CT || (clientTeam == CS_TEAM_T && showTerrorists))
             {
-                ShowHudText(i, 5, "%s Bombsite: %s", clientTeam == CS_TEAM_T ? "Defend" : "Retake", (bombsite == BOMBSITE_A) ? "A" : "B");
+                ShowHudText(i, 5, "%s Bombsite: %s", clientTeam == CS_TEAM_T ? "Defend" : "Retake", bombsite == BOMBSITE_A ? "A" : "B");
             }
         }
     }
