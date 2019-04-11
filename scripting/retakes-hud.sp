@@ -42,7 +42,7 @@ public Plugin myinfo =
     name = "[Retakes] Bombsite HUD",
     author = "B3none",
     description = "Bombsite Hud",
-    version = "2.2.2",
+    version = "2.2.3",
     url = "https://github.com/b3none/retakes-hud"
 };
 
@@ -102,9 +102,6 @@ public Action displayHud(Handle timer)
         return;
     }
 
-    char bombsiteStr[8];
-    bombsiteStr = (bombsite == BOMBSITE_A) ? "A" : "B";
-
     for (int i = 1; i <= MaxClients; i++)
     {
         if (IsValidClient(i))
@@ -119,7 +116,7 @@ public Action displayHud(Handle timer)
             }
             else if (clientTeam == CS_TEAM_CT || (clientTeam == CS_TEAM_T && showTerrorists))
             {
-                ShowHudText(i, 5, "%s Bombsite: %s", clientTeam == CS_TEAM_T ? "Defend" : "Retake", bombsite);
+                ShowHudText(i, 5, "%s Bombsite: %s", clientTeam == CS_TEAM_T ? "Defend" : "Retake", (bombsite == BOMBSITE_A) ? "A" : "B");
             }
         }
     }
