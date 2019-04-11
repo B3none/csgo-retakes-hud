@@ -1,6 +1,6 @@
 # Retakes HUD
 Displays the current bombsite in a hud  
-This will work with all versions 
+This will work with all versions of the retakes plugin
 
 # Installation
 Add the latest compiled version of the `retakeshud.smx` into your `addons/sourcemod/plugins/` folder.
