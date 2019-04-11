@@ -42,7 +42,7 @@ public Plugin myinfo =
     name = "[Retakes] Bombsite HUD",
     author = "B3none",
     description = "Bombsite Hud",
-    version = "2.2.0",
+    version = "2.2.1",
     url = "https://github.com/b3none/retakes-hud"
 };
 
@@ -65,7 +65,13 @@ public void OnPluginStart()
 
 public void OnConfigsExecuted()
 {
-    autoplantEnabled = GetConVarBool(cvar_autoplant_enabled);
+    autoplantEnabled = false;
+	
+    if (cvar_autoplant_enabled != null)
+    {
+        autoplantEnabled = GetConVarBool(cvar_autoplant_enabled);
+    }
+
     showTerrorists = GetConVarBool(cvar_showterrorists);
     red = GetConVarInt(cvar_red);
     green = GetConVarInt(cvar_green);
