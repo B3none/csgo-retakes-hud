@@ -85,7 +85,7 @@ public void OnConfigsExecuted()
 
 public void Event_OnRoundStart(Handle event, const char[] name, bool dontBroadcast)
 {
-	bomber = GetClientWithBomb();
+	bomber = GetBomber();
 	
 	if (IsValidClient(bomber))
 	{
@@ -110,7 +110,7 @@ public Action displayHud(Handle timer)
             
             SetHudTextParams(xcord, ycord, holdtime, red, green, blue, 255, 0, 0.25, fadein, fadeout);
             
-            if (!autoplantEnabled && HasBomb(i))
+            if (!autoplantEnabled && i == bomber)
             {
                 ShowHudText(i, 5, "Plant the bomb!");
             }
@@ -127,27 +127,14 @@ stock bool IsValidClient(int client)
     return client > 0 && client <= MaxClients && IsClientConnected(client) && IsClientInGame(client) && !IsFakeClient(client);
 }
 
-stock int GetClientWithBomb()
-{
-	for (int i = 1; i <= MaxClients; i++)
-	{
-		if (IsValidClient(i) && HasBomb(i))
-		{
-			return i;
-		}
-	}
-	
-	return -1;
-}
-
-stock bool HasBomb(int client)
-{
-    return GetClientTeam(client) == CS_TEAM_T && GetPlayerWeaponSlot(client, 5) != -1;
-}
-
 stock bool IsWarmup()
 {
     return GameRules_GetProp("m_bWarmupPeriod") == 1;
+}
+
+stock int GetBomber()
+{
+	return GetEntProp(GetPlayerResourceEntity(), Prop_Send, "m_iPlayerC4");
 }
 
 stock int GetNearestBombsite(int client)
