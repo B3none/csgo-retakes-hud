@@ -42,7 +42,7 @@ public Plugin myinfo =
     name = "[Retakes] Bombsite HUD",
     author = "B3none",
     description = "Bombsite Hud",
-    version = "2.1.0",
+    version = "2.2.0",
     url = "https://github.com/b3none/retakes-hud"
 };
 
@@ -80,14 +80,18 @@ public void OnConfigsExecuted()
 public void Event_OnRoundStart(Handle event, const char[] name, bool dontBroadcast)
 {
 	bomber = GetClientWithBomb();
-	bombsite = GetNearestBombsite(bomber);
 	
-	CreateTimer(1.0, displayHud);
+	if (IsValidClient(bomber))
+	{
+		bombsite = GetNearestBombsite(bomber);
+		
+		CreateTimer(1.0, displayHud);
+	}
 }
 
 public Action displayHud(Handle timer)
 {
-    if (IsWarmup() || bomber == -1 || bombsite == BOMBSITE_INVALID)
+    if (IsWarmup() || bombsite == BOMBSITE_INVALID)
     {
         return;
     }
