@@ -41,7 +41,7 @@ public Plugin myinfo =
 {
     name = "[Retakes] Bombsite HUD",
     author = "B3none",
-    description = "Bombsite Hud",
+    description = "Displays the current bombsite in a HUD message. Will work with all versions of the Retakes plugin.",
     version = "2.2.4",
     url = "https://github.com/b3none/retakes-hud"
 };
