@@ -42,7 +42,7 @@ public Plugin myinfo =
     name = "[Retakes] Bombsite HUD",
     author = "B3none",
     description = "Bombsite Hud",
-    version = "2.2.3",
+    version = "2.2.4",
     url = "https://github.com/b3none/retakes-hud"
 };
 
@@ -125,11 +125,6 @@ public Action displayHud(Handle timer)
     }
 }
 
-stock bool IsValidClient(int client)
-{
-    return client > 0 && client <= MaxClients && IsClientConnected(client) && IsClientInGame(client) && !IsFakeClient(client);
-}
-
 stock bool IsWarmup()
 {
     return GameRules_GetProp("m_bWarmupPeriod") == 1;
@@ -137,7 +132,20 @@ stock bool IsWarmup()
 
 stock int GetBomber()
 {
-	return GetEntProp(GetPlayerResourceEntity(), Prop_Send, "m_iPlayerC4");
+	for (int i = 1; i <= MaxClients; i++)
+	{
+		if (IsValidClient(i) && HasBomb(i))
+		{
+			return i;
+		}
+	}
+	
+	return -1;
+}
+
+stock bool HasBomb(int client)
+{
+    return GetPlayerWeaponSlot(client, 4) != -1;
 }
 
 stock int GetNearestBombsite(int client)
@@ -164,4 +172,9 @@ stock int GetNearestBombsite(int client)
 	}
 	
 	return BOMBSITE_B;
+}
+
+stock bool IsValidClient(int client)
+{
+    return client > 0 && client <= MaxClients && IsClientConnected(client) && IsClientInGame(client) && !IsFakeClient(client);
 }
