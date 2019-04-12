@@ -145,7 +145,7 @@ stock int GetNearestBombsite(int client)
 	int playerManager = FindEntityByClassname(INVALID_ENT_REFERENCE, "cs_player_manager");
 	if (playerManager == INVALID_ENT_REFERENCE)
 	{
-		return INVALID_ENT_REFERENCE;
+		return BOMBSITE_INVALID;
 	}
 	
 	float aCenter[3], bCenter[3];
