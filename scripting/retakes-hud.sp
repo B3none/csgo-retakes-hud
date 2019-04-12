@@ -101,6 +101,9 @@ public Action displayHud(Handle timer)
     {
         return;
     }
+    
+    char bombsiteStr[1];
+    bombsiteStr = bombsite == BOMBSITE_A ? "A" : "B";
 
     for (int i = 1; i <= MaxClients; i++)
     {
@@ -116,7 +119,7 @@ public Action displayHud(Handle timer)
             }
             else if (clientTeam == CS_TEAM_CT || (clientTeam == CS_TEAM_T && showTerrorists))
             {
-                ShowHudText(i, 5, "%s Bombsite: %s", clientTeam == CS_TEAM_T ? "Defend" : "Retake", bombsite == BOMBSITE_A ? "A" : "B");
+                ShowHudText(i, 5, "%s Bombsite: %s", clientTeam == CS_TEAM_T ? "Defend" : "Retake", bombsiteStr);
             }
         }
     }
