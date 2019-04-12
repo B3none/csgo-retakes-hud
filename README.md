@@ -3,7 +3,7 @@ Displays the current bombsite in a hud
 This will work with all versions of the retakes plugin
 
 # Installation
-Add the latest compiled version of the `retakeshud.smx` into your `addons/sourcemod/plugins/` folder.
+Add the latest compiled version of the `retakes-hud.smx` into your `addons/sourcemod/plugins/` folder.
 
 The latest version is listed on the [releases tab](https://github.com/b3none/retakes-hud/releases)
 
