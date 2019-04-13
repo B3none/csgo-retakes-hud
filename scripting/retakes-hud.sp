@@ -42,7 +42,7 @@ public Plugin myinfo =
     name = "[Retakes] Bombsite HUD",
     author = "B3none",
     description = "Displays the current bombsite in a HUD message. Will work with all versions of the Retakes plugin.",
-    version = "2.2.4",
+    version = "2.2.5",
     url = "https://github.com/b3none/retakes-hud"
 };
 
@@ -60,7 +60,7 @@ public void OnPluginStart()
     cvar_showterrorists = CreateConVar("sm_showterrorists", "1", "Should we display HUD to terrorists?");
 
     AutoExecConfig(true, "retakehud");
-    HookEvent("round_start", Event_OnRoundStart);
+    HookEvent("round_start", Event_OnRoundStart, EventHookMode_Pre);
 }
 
 public void OnConfigsExecuted()
