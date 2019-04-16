@@ -99,28 +99,28 @@ public void OnConfigsExecuted()
 
 public void Event_OnRoundStart(Handle event, const char[] name, bool dontBroadcast)
 {
-	if (!pluginEnabled || !retakesEnabled)
+	if (!pluginEnabled || !retakesEnabled || IsWarmup())
 	{
 		return;
 	}
 	
 	bomber = GetBomber();
 	
-	if (IsValidClient(bomber))
+	if (!IsValidClient(bomber))
 	{
-		bombsite = GetNearestBombsite(bomber);
-		
+		return;
+	}
+	
+	bombsite = GetNearestBombsite(bomber);
+	
+	if (bombsite != BOMBSITE_INVALID)
+	{
 		CreateTimer(1.0, displayHud);
 	}
 }
 
 public Action displayHud(Handle timer)
 {
-    if (IsWarmup() || bombsite == BOMBSITE_INVALID)
-    {
-        return;
-    }
-    
     char bombsiteStr[1];
     bombsiteStr = bombsite == BOMBSITE_A ? "A" : "B";
 
@@ -146,7 +146,7 @@ public Action displayHud(Handle timer)
 
 stock bool IsWarmup()
 {
-    return GameRules_GetProp("m_bWarmupPeriod") == 1;
+	return GameRules_GetProp("m_bWarmupPeriod") == 1;
 }
 
 stock int GetBomber()
@@ -164,7 +164,7 @@ stock int GetBomber()
 
 stock bool HasBomb(int client)
 {
-    return GetPlayerWeaponSlot(client, 4) != -1;
+	return GetPlayerWeaponSlot(client, 4) != -1;
 }
 
 stock int GetNearestBombsite(int client)
@@ -185,12 +185,7 @@ stock int GetNearestBombsite(int client)
 	float aDist = GetVectorDistance(aCenter, pos, true);
 	float bDist = GetVectorDistance(bCenter, pos, true);
 	
-	if (aDist < bDist)
-	{
-		return BOMBSITE_A;
-	}
-	
-	return BOMBSITE_B;
+	return (aDist < bDist) ? BOMBSITE_A : BOMBSITE_B;
 }
 
 stock bool IsValidClient(int client)
