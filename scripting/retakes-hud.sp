@@ -35,9 +35,9 @@ float ycord;
 
 enum //Bombsites
 {
-    BOMBSITE_INVALID = -1,
-    BOMBSITE_A = 0,
-    BOMBSITE_B = 1
+	BOMBSITE_INVALID = -1,
+	BOMBSITE_A = 0,
+	BOMBSITE_B = 1
 }
 
 int bomber = -1;
@@ -45,56 +45,56 @@ int bombsite = BOMBSITE_INVALID;
 
 public Plugin myinfo =
 {
-    name = "[Retakes] Bombsite HUD",
-    author = "B3none",
-    description = "Displays the current bombsite in a HUD message. Will work with all versions of the Retakes plugin.",
-    version = "2.3.0",
-    url = "https://github.com/b3none/retakes-hud"
+	name = "[Retakes] Bombsite HUD",
+	author = "B3none",
+	description = "Displays the current bombsite in a HUD message. Will work with all versions of the Retakes plugin.",
+	version = "2.3.0",
+	url = "https://github.com/b3none/retakes-hud"
 };
 
 public void OnPluginStart()
 {
-    cvar_autoplant_enabled = FindConVar("sm_autoplant_enabled");
-    cvar_retakes_enabled = FindConVar("sm_retakes_enabled");
-    cvar_plugin_enabled = CreateConVar("sm_retakes_hud_enabled", "1", "Should we display the HUD?", _, true, 0.0, true, 1.0);
-    
-    cvar_red = CreateConVar("sm_retakes_hud_red", "255", "How much red would you like?", _, true, 0.0, true, 255.0);
-    cvar_green = CreateConVar("sm_retakes_hud_green", "255", "How much green would you like?", _, true, 0.0, true, 255.0);
-    cvar_blue = CreateConVar("sm_retakes_hud_blue", "255", "How much blue would you like?", _, true, 0.0, true, 255.0);
-    cvar_fadein = CreateConVar("sm_retakes_hud_fade_in", "0.5", "How long would you like the fade in animation to last in seconds?", _, true, 0.0);
-    cvar_fadeout = CreateConVar("sm_retakes_hud_fade_out", "0.5", "How long would you like the fade out animation to last in seconds?", _, true, 0.0);
-    cvar_holdtime = CreateConVar("sm_retakes_hud_time", "5.0", "Time in seconds to display the HUD.", _, true, 1.0);
-    cvar_xcord = CreateConVar("sm_retakes_hud_position_x", "0.42", "The position of the HUD on the X axis.", _, true, 0.0);
-    cvar_ycord = CreateConVar("sm_retakes_hud_position_y", "0.3", "The position of the HUD on the Y axis.", _, true, 0.0);
-    cvar_showterrorists = CreateConVar("sm_retakes_hud_showterrorists", "1", "Should we display HUD to terrorists?", _, true, 0.0, true, 1.0);
-
-    AutoExecConfig(true, "retakes_hud");
-    
-    HookEvent("round_start", Event_OnRoundStart, EventHookMode_Pre);
+	cvar_autoplant_enabled = FindConVar("sm_autoplant_enabled");
+	cvar_retakes_enabled = FindConVar("sm_retakes_enabled");
+	cvar_plugin_enabled = CreateConVar("sm_retakes_hud_enabled", "1", "Should we display the HUD?", _, true, 0.0, true, 1.0);
+	
+	cvar_red = CreateConVar("sm_retakes_hud_red", "255", "How much red would you like?", _, true, 0.0, true, 255.0);
+	cvar_green = CreateConVar("sm_retakes_hud_green", "255", "How much green would you like?", _, true, 0.0, true, 255.0);
+	cvar_blue = CreateConVar("sm_retakes_hud_blue", "255", "How much blue would you like?", _, true, 0.0, true, 255.0);
+	cvar_fadein = CreateConVar("sm_retakes_hud_fade_in", "0.5", "How long would you like the fade in animation to last in seconds?", _, true, 0.0);
+	cvar_fadeout = CreateConVar("sm_retakes_hud_fade_out", "0.5", "How long would you like the fade out animation to last in seconds?", _, true, 0.0);
+	cvar_holdtime = CreateConVar("sm_retakes_hud_time", "5.0", "Time in seconds to display the HUD.", _, true, 1.0);
+	cvar_xcord = CreateConVar("sm_retakes_hud_position_x", "0.42", "The position of the HUD on the X axis.", _, true, 0.0);
+	cvar_ycord = CreateConVar("sm_retakes_hud_position_y", "0.3", "The position of the HUD on the Y axis.", _, true, 0.0);
+	cvar_showterrorists = CreateConVar("sm_retakes_hud_showterrorists", "1", "Should we display HUD to terrorists?", _, true, 0.0, true, 1.0);
+	
+	AutoExecConfig(true, "retakes_hud");
+	
+	HookEvent("round_start", Event_OnRoundStart, EventHookMode_Pre);
 }
 
 public void OnConfigsExecuted()
 {
-    if (cvar_autoplant_enabled != null)
-    {
-        autoplantEnabled = GetConVarBool(cvar_autoplant_enabled);
-    }
-    
-    if (cvar_retakes_enabled != null)
-    {
-        retakesEnabled = GetConVarBool(cvar_retakes_enabled);
-    }
-    
-    pluginEnabled = GetConVarBool(cvar_plugin_enabled);
-    showTerrorists = GetConVarBool(cvar_showterrorists);
-    red = GetConVarInt(cvar_red);
-    green = GetConVarInt(cvar_green);
-    blue = GetConVarInt(cvar_blue);
-    fadein = GetConVarFloat(cvar_fadein);
-    fadeout = GetConVarFloat(cvar_fadeout);
-    holdtime = GetConVarFloat(cvar_holdtime);
-    xcord = GetConVarFloat(cvar_xcord);
-    ycord = GetConVarFloat(cvar_ycord);
+	if (cvar_autoplant_enabled != null)
+	{
+		autoplantEnabled = GetConVarBool(cvar_autoplant_enabled);
+	}
+	
+	if (cvar_retakes_enabled != null)
+	{
+		retakesEnabled = GetConVarBool(cvar_retakes_enabled);
+	}
+	
+	pluginEnabled = GetConVarBool(cvar_plugin_enabled);
+	showTerrorists = GetConVarBool(cvar_showterrorists);
+	red = GetConVarInt(cvar_red);
+	green = GetConVarInt(cvar_green);
+	blue = GetConVarInt(cvar_blue);
+	fadein = GetConVarFloat(cvar_fadein);
+	fadeout = GetConVarFloat(cvar_fadeout);
+	holdtime = GetConVarFloat(cvar_holdtime);
+	xcord = GetConVarFloat(cvar_xcord);
+	ycord = GetConVarFloat(cvar_ycord);
 }
 
 public void Event_OnRoundStart(Handle event, const char[] name, bool dontBroadcast)
