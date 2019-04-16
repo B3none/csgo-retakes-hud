@@ -190,5 +190,5 @@ stock int GetNearestBombsite(int client)
 
 stock bool IsValidClient(int client)
 {
-    return client > 0 && client <= MaxClients && IsClientConnected(client) && IsClientInGame(client) && !IsFakeClient(client);
+	return client > 0 && client <= MaxClients && IsClientConnected(client) && IsClientInGame(client) && !IsFakeClient(client);
 }
