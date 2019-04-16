@@ -121,27 +121,27 @@ public void Event_OnRoundStart(Handle event, const char[] name, bool dontBroadca
 
 public Action displayHud(Handle timer)
 {
-    char bombsiteStr[1];
-    bombsiteStr = bombsite == BOMBSITE_A ? "A" : "B";
-
-    for (int i = 1; i <= MaxClients; i++)
-    {
-        if (IsValidClient(i))
-        {
-            int clientTeam = GetClientTeam(i);
-            
-            SetHudTextParams(xcord, ycord, holdtime, red, green, blue, 255, 0, 0.25, fadein, fadeout);
-            
-            if (!autoplantEnabled && i == bomber)
-            {
-                ShowHudText(i, 5, "Plant the bomb!");
-            }
-            else if (clientTeam == CS_TEAM_CT || (clientTeam == CS_TEAM_T && showTerrorists))
-            {
-                ShowHudText(i, 5, "%s Bombsite: %s", clientTeam == CS_TEAM_T ? "Defend" : "Retake", bombsiteStr);
-            }
-        }
-    }
+	char bombsiteStr[1];
+	bombsiteStr = bombsite == BOMBSITE_A ? "A" : "B";
+	
+	for (int i = 1; i <= MaxClients; i++)
+	{
+		if (IsValidClient(i))
+		{
+			int clientTeam = GetClientTeam(i);
+			
+			SetHudTextParams(xcord, ycord, holdtime, red, green, blue, 255, 0, 0.25, fadein, fadeout);
+			
+			if (!autoplantEnabled && i == bomber)
+			{
+				ShowHudText(i, 5, "Plant the bomb!");
+			}
+			else if (clientTeam == CS_TEAM_CT || (clientTeam == CS_TEAM_T && showTerrorists))
+			{
+				ShowHudText(i, 5, "%s Bombsite: %s", clientTeam == CS_TEAM_T ? "Defend" : "Retake", bombsiteStr);
+			}
+		}
+	}
 }
 
 stock bool IsWarmup()
