@@ -169,14 +169,14 @@ stock bool HasBomb(int client)
 
 stock int GetNearestBombsite(int client)
 {
-	float pos[3];
-	GetClientAbsOrigin(client, pos);
-	
 	int playerManager = FindEntityByClassname(INVALID_ENT_REFERENCE, "cs_player_manager");
 	if (playerManager == INVALID_ENT_REFERENCE)
 	{
 		return BOMBSITE_INVALID;
 	}
+	
+	float pos[3];
+	GetClientAbsOrigin(client, pos);
 	
 	float aCenter[3], bCenter[3];
 	GetEntPropVector(playerManager, Prop_Send, "m_bombsiteCenterA", aCenter);
