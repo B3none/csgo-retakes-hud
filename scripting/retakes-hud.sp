@@ -48,12 +48,14 @@ public Plugin myinfo =
 	name = "[Retakes] Bombsite HUD",
 	author = "B3none",
 	description = "Displays the current bombsite in a HUD message. Will work with all versions of the Retakes plugin.",
-	version = "2.3.0",
+	version = "2.4.0",
 	url = "https://github.com/b3none/retakes-hud"
 };
 
 public void OnPluginStart()
 {
+	LoadTranslations("retakes-hud.phrases");
+	
 	cvar_autoplant_enabled = FindConVar("sm_autoplant_enabled");
 	cvar_retakes_enabled = FindConVar("sm_retakes_enabled");
 	cvar_plugin_enabled = CreateConVar("sm_retakes_hud_enabled", "1", "Should we display the HUD?", _, true, 0.0, true, 1.0);
@@ -134,11 +136,11 @@ public Action displayHud(Handle timer)
 			
 			if (!autoplantEnabled && i == bomber)
 			{
-				ShowHudText(i, 5, "Plant the bomb!");
+				ShowHudText(i, 5, "%T", "Plant", i);
 			}
 			else if (clientTeam == CS_TEAM_CT || (clientTeam == CS_TEAM_T && showTerrorists))
 			{
-				ShowHudText(i, 5, "%s Bombsite: %s", clientTeam == CS_TEAM_T ? "Defend" : "Retake", bombsiteStr);
+				ShowHudText(i, 5, "%T", clientTeam == CS_TEAM_T ? "Defend" : "Retake", i, bombsiteStr);
 			}
 		}
 	}
