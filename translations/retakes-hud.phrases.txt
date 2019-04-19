@@ -1,0 +1,19 @@
+"Phrases"
+{
+  "Plant"
+  {
+    "en"		"Plant the bomb!"
+  }
+  
+  "Retake"
+  {
+    "#format"	"{1:s}"
+    "en"		"Retake Bombsite: {1}"
+  }
+  
+  "Defend"
+  {
+    "#format"	"{1:s}"
+    "en"		"Defend Bombsite: {1}"
+  }
+}
