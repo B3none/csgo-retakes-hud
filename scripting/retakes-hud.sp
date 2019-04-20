@@ -167,7 +167,7 @@ public Action displayHud(Handle timer)
 		
 		if (StrContains(style, STYLE_CHAT))
 		{
-			PrintToChat(i, "%s", message);
+			PrintToChat(i, "%s %s", MESSAGE_PREFIX, message);
 		}
 	}
 }
