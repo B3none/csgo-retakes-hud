@@ -5,9 +5,15 @@
 #pragma semicolon 1
 #pragma newdecls required
 
+#define MESSAGE_PREFIX "[\x04Retakes\x01]"
+#define STYLE_HUD "1"
+#define STYLE_HINT "2"
+#define STYLE_CHAT "3"
+
 Handle cvar_autoplant_enabled = null;
 Handle cvar_retakes_enabled = null;
 Handle cvar_plugin_enabled = null;
+Handle cvar_style = null;
 
 Handle cvar_red = null;
 Handle cvar_green = null;
@@ -22,6 +28,7 @@ Handle cvar_showterrorists = null;
 bool autoplantEnabled = false;
 bool retakesEnabled = false;
 bool pluginEnabled;
+char style[8];
 
 bool showTerrorists;
 int red;
@@ -48,7 +55,7 @@ public Plugin myinfo =
 	name = "[Retakes] Bombsite HUD",
 	author = "B3none",
 	description = "Displays the current bombsite in a HUD message. Will work with all versions of the Retakes plugin.",
-	version = "2.4.0",
+	version = "2.5.0",
 	url = "https://github.com/b3none/retakes-hud"
 };
 
@@ -59,6 +66,7 @@ public void OnPluginStart()
 	cvar_autoplant_enabled = FindConVar("sm_autoplant_enabled");
 	cvar_retakes_enabled = FindConVar("sm_retakes_enabled");
 	cvar_plugin_enabled = CreateConVar("sm_retakes_hud_enabled", "1", "Should we display the HUD?", _, true, 0.0, true, 1.0);
+	cvar_style = CreateConVar("sm_retakes_hud_style", "1", "1: HUD, 2: Hint Text, 3: Chat | You can also use multiple by doing 123", _, true, 0.0, true, 123.0);
 	
 	cvar_red = CreateConVar("sm_retakes_hud_red", "255", "How much red would you like?", _, true, 0.0, true, 255.0);
 	cvar_green = CreateConVar("sm_retakes_hud_green", "255", "How much green would you like?", _, true, 0.0, true, 255.0);
@@ -89,6 +97,7 @@ public void OnConfigsExecuted()
 	
 	pluginEnabled = GetConVarBool(cvar_plugin_enabled);
 	showTerrorists = GetConVarBool(cvar_showterrorists);
+	GetConVarString(cvar_style, style, sizeof(style));
 	red = GetConVarInt(cvar_red);
 	green = GetConVarInt(cvar_green);
 	blue = GetConVarInt(cvar_blue);
@@ -128,20 +137,37 @@ public Action displayHud(Handle timer)
 	
 	for (int i = 1; i <= MaxClients; i++)
 	{
-		if (IsValidClient(i))
+		if (!IsValidClient(i))
 		{
-			int clientTeam = GetClientTeam(i);
-			
+			continue;
+		}
+		
+		int clientTeam = GetClientTeam(i);
+		char message[64];
+		
+		if (!autoplantEnabled && i == bomber)
+		{
+			Format(message, sizeof(message), "%T", "Plant", i);
+		}
+		else if (clientTeam == CS_TEAM_CT || (clientTeam == CS_TEAM_T && showTerrorists))
+		{
+			Format(message, sizeof(message), "%T", clientTeam == CS_TEAM_T ? "Defend" : "Retake", i, bombsiteStr);
+		}
+		
+		if (StrContains(style, STYLE_HUD))
+		{
 			SetHudTextParams(xcord, ycord, holdtime, red, green, blue, 255, 0, 0.25, fadein, fadeout);
-			
-			if (!autoplantEnabled && i == bomber)
-			{
-				ShowHudText(i, 5, "%T", "Plant", i);
-			}
-			else if (clientTeam == CS_TEAM_CT || (clientTeam == CS_TEAM_T && showTerrorists))
-			{
-				ShowHudText(i, 5, "%T", clientTeam == CS_TEAM_T ? "Defend" : "Retake", i, bombsiteStr);
-			}
+			ShowHudText(i, 5, "%s", message);
+		}
+		
+		if (StrContains(style, STYLE_HINT))
+		{
+			PrintHintText(i, "%s", message);
+		}
+		
+		if (StrContains(style, STYLE_CHAT))
+		{
+			PrintToChat(i, "%s", message);
 		}
 	}
 }
