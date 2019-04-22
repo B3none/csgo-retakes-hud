@@ -154,18 +154,18 @@ public Action displayHud(Handle timer)
 			Format(message, sizeof(message), "%T", clientTeam == CS_TEAM_T ? "Defend" : "Retake", i, bombsiteStr);
 		}
 		
-		if (StrContains(style, STYLE_HUD))
+		if (StrContains(style, STYLE_HUD) != -1)
 		{
 			SetHudTextParams(xcord, ycord, holdtime, red, green, blue, 255, 0, 0.25, fadein, fadeout);
 			ShowHudText(i, 5, "%s", message);
 		}
 		
-		if (StrContains(style, STYLE_HINT))
+		if (StrContains(style, STYLE_HINT) != -1)
 		{
 			PrintHintText(i, "%s", message);
 		}
 		
-		if (StrContains(style, STYLE_CHAT))
+		if (StrContains(style, STYLE_CHAT) != -1)
 		{
 			PrintToChat(i, "%s %s", MESSAGE_PREFIX, message);
 		}
