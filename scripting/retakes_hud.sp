@@ -197,8 +197,8 @@ stock bool HasBomb(int client)
 
 stock int GetNearestBombsite(int client)
 {
-	int playerManager = FindEntityByClassname(INVALID_ENT_REFERENCE, "cs_player_manager");
-	if (playerManager == INVALID_ENT_REFERENCE)
+	int playerResource = GetPlayerResourceEntity();
+	if (playerResource == INVALID_ENT_REFERENCE)
 	{
 		return BOMBSITE_INVALID;
 	}
@@ -207,8 +207,8 @@ stock int GetNearestBombsite(int client)
 	GetClientAbsOrigin(client, pos);
 	
 	float aCenter[3], bCenter[3];
-	GetEntPropVector(playerManager, Prop_Send, "m_bombsiteCenterA", aCenter);
-	GetEntPropVector(playerManager, Prop_Send, "m_bombsiteCenterB", bCenter);
+	GetEntPropVector(playerResource, Prop_Send, "m_bombsiteCenterA", aCenter);
+	GetEntPropVector(playerResource, Prop_Send, "m_bombsiteCenterB", bCenter);
 	
 	float aDist = GetVectorDistance(aCenter, pos, true);
 	float bDist = GetVectorDistance(bCenter, pos, true);
