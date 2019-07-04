@@ -8,7 +8,7 @@ Add the latest compiled version of the `retakes-hud.smx` into your `addons/sourc
 The latest version is listed on the [releases tab](https://github.com/b3none/retakes-hud/releases)
 
 # Authors
-Alex Blackham - Developer and Maintainer - [B3none](https://github.com/b3none/)
+Alex Blackham - Developer and Maintainer - [B3none](https://b3none.co.uk/)
 
 # How does it look?
 ![T](https://steamuserimages-a.akamaihd.net/ugc/937196994992026611/4775A7011E1AB4856189BB2DA3C1DF5B8E5FF245/)
