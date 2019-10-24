@@ -62,9 +62,7 @@ public Plugin myinfo =
 public void OnPluginStart()
 {
 	LoadTranslations("retakes-hud.phrases");
-	
-	cvar_autoplant_enabled = FindConVar("sm_autoplant_enabled");
-	cvar_retakes_enabled = FindConVar("sm_retakes_enabled");
+
 	cvar_plugin_enabled = CreateConVar("sm_retakes_hud_enabled", "1", "Should we display the HUD?", _, true, 0.0, true, 1.0);
 	cvar_style = CreateConVar("sm_retakes_hud_style", "1", "1: HUD, 2: Hint Text, 3: Chat | You can also use multiple by doing 123", _, true, 0.0, true, 123.0);
 	
@@ -81,6 +79,11 @@ public void OnPluginStart()
 	AutoExecConfig(true, "retakes_hud");
 	
 	HookEvent("round_start", Event_OnRoundStart, EventHookMode_Pre);
+}
+
+public void OnAllPluginsLoaded() {
+	cvar_autoplant_enabled = FindConVar("sm_autoplant_enabled");
+	cvar_retakes_enabled = FindConVar("sm_retakes_enabled");
 }
 
 public void OnConfigsExecuted()
