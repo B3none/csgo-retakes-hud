@@ -1,0 +1,19 @@
+"Phrases"
+{
+  "Plant"
+  {
+    "chi"		"快下包！"
+  }
+  
+  "Retake"
+  {
+    "#format"	"{1:s}"
+    "chi"		"回防包点：{1}"
+  }
+  
+  "Defend"
+  {
+    "#format"	"{1:s}"
+    "chi"		"防守包点：{1}"
+  }
+}
