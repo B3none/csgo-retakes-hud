@@ -3,17 +3,20 @@
   "Plant"
   {
     "en"		"Plant the bomb!"
+    "fr"		"Plante la bombe!"
   }
   
   "Retake"
   {
     "#format"	"{1:s}"
-    "en"		"Retake Bombsite: {1}"
+    "en"		"Retake Bombsite: {darkred}{1}"
+    "fr"		"Retake le site: {darkred}{1}"
   }
   
   "Defend"
   {
     "#format"	"{1:s}"
-    "en"		"Defend Bombsite: {1}"
+    "en"		"Defend Bombsite:{darkred}{1}"
+    "fr"		"Defendre le site:{darkred}{1}"
   }
 }
