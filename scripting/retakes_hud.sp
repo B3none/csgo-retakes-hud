@@ -81,7 +81,8 @@ public void OnPluginStart()
 	HookEvent("round_start", Event_OnRoundStart, EventHookMode_Pre);
 }
 
-public void OnAllPluginsLoaded() {
+public void OnAllPluginsLoaded()
+{
 	cvar_autoplant_enabled = FindConVar("sm_autoplant_enabled");
 	cvar_retakes_enabled = FindConVar("sm_retakes_enabled");
 }
