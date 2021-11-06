@@ -54,8 +54,8 @@ public Plugin myinfo =
 {
 	name = "[Retakes] Bombsite HUD",
 	author = "B3none",
-	description = "Displays the current bombsite in a HUD message. Will work with all versions of the Retakes plugin.",
-	version = "2.5.0",
+	description = "Displays the current bombsite in a HUD message. Will work with all versions of the Retakes plugin",
+	version = "2.5.1",
 	url = "https://github.com/b3none/retakes-hud"
 };
 
@@ -171,7 +171,10 @@ public Action displayHud(Handle timer)
 		
 		if (StrContains(style, STYLE_CHAT) != -1)
 		{
-			PrintToChat(i, "%s %s", MESSAGE_PREFIX, message);
+			if (clientTeam == CS_TEAM_CT || (clientTeam == CS_TEAM_T))
+			{
+				PrintToChat(i, "%s %s", MESSAGE_PREFIX, message);
+			}
 		}
 	}
 }
