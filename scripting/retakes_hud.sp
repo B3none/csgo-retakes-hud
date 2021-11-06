@@ -171,7 +171,7 @@ public Action displayHud(Handle timer)
 		
 		if (StrContains(style, STYLE_CHAT) != -1)
 		{
-			if (clientTeam == CS_TEAM_CT || (clientTeam == CS_TEAM_T))
+			if (clientTeam == CS_TEAM_CT || clientTeam == CS_TEAM_T)
 			{
 				PrintToChat(i, "%s %s", MESSAGE_PREFIX, message);
 			}
