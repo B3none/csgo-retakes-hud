@@ -136,7 +136,7 @@ public void Event_OnRoundStart(Handle event, const char[] name, bool dontBroadca
 
 public Action displayHud(Handle timer)
 {
-	char bombsiteStr[1];
+	char bombsiteStr[8];
 	bombsiteStr = bombsite == BOMBSITE_A ? "A" : "B";
 	
 	for (int i = 1; i <= MaxClients; i++)
