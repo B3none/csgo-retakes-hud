@@ -1,4 +1,4 @@
-# Retakes HUD
+# CS:GO Retakes HUD
 Displays the current bombsite in a hud  
 This will work with all versions of the retakes plugin
 
